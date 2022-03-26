@@ -2,8 +2,6 @@
 
 const button = document.getElementById("taskButton");
 const inputField = document.getElementById("taskInput");
-const checkbox = document.getElementsByClassName("checkbox");
-console.log(checkbox)
 let taskListDiv = document.getElementById("tasksList")
 let taskArray = [];
 
@@ -16,8 +14,7 @@ button.addEventListener('click', addTaskToTheList);
 // when enter key is press adds task to the task list
 inputField.addEventListener('keypress', addTaskToTheListFromKeyPress);
 
-// when clicked task is crossed out
-checkbox.addEventListener('click', crossDoneTask)
+ 
 
 
 // Functions
@@ -27,7 +24,7 @@ function addTaskToTheList () { // Adds task to the list
 
     taskArray.push(inputField.value);
 
-    // Create a list item, a span and a checkbox
+    // Create a list item that will contain a span and a checkbox
     let taskEntry = document.createElement('li')
     let taskText = document.createElement('span');
     let taskCheckbox = document.createElement('input');
@@ -52,7 +49,11 @@ function addTaskToTheList () { // Adds task to the list
     // clear input
     
     inputField.value = '';
-    
+
+    // when checkbox clicked cross out task
+    const checkbox = document.querySelector("#tasksList > li > input");
+    checkbox.addEventListener('change', crossDoneTask);
+
     } 
 }
 
@@ -64,11 +65,10 @@ function addTaskToTheListFromKeyPress(event) {
     }
 }
 
-
-
 function crossDoneTask(event) {
-    if(this.checked){
-        this.previousElementSibling.classList.add('crossedTask');
-    }
-
+    if(this.checked) {
+    this.previousElementSibling.classList.add('crossedTask');
+   } else {
+    this.previousElementSibling.classList.remove('crossedTask');   
+   }  
 }
