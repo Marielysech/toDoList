@@ -68,6 +68,10 @@ function addTaskToTheListFromKeyPress(event) {
 function crossDoneTask(event) {
     if(this.checked) {
     this.previousElementSibling.classList.add('crossedTask');
+    let tag = document.createElement('span')
+    tag.setAttribute(id,"doneTag");
+    tag.innerHTML = "DONE"
+    taskEntry.append(tag);
    } else {
     this.previousElementSibling.classList.remove('crossedTask');   
    }  
