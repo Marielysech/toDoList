@@ -32,16 +32,12 @@ function addTaskToTheList () { // Adds task to the list
     let taskCheckbox = document.createElement('input');
     let deleteButton = document.createElement('i')
 
-    // specify the input as a checkbox
-    taskCheckbox.setAttribute("type", "checkbox"); 
-
-
-    // set the inner HTML and attributes
+    // set the inner HTML
     let newEntry = taskArray[taskArray.length-1]
     taskText.innerHTML = newEntry;
     statusTag.innerHTML = "TO DO"
 
-    // adds class to the new li and new checkbox
+    // adds class and id
     taskEntry.classList.add("newTaskEntry");
     inlineTask.classList.add("inlineTaskEntry");
     taskCheckbox.classList.add("checkbox");
@@ -49,6 +45,8 @@ function addTaskToTheList () { // Adds task to the list
     deleteButton.setAttribute("class","fa-solid fa-trash-can")
     deleteButton.setAttribute("id","deleteButton")
     statusTag.setAttribute("id","toDoTag")
+    taskCheckbox.setAttribute("type", "checkbox"); 
+
 
 
     // append the new task in the ul
@@ -63,13 +61,15 @@ function addTaskToTheList () { // Adds task to the list
     
     inputField.value = '';
 
-    // when checkbox clicked cross out task
+    // event listeners
     taskCheckbox.addEventListener('change', crossDoneTask);
-    }
     deleteButton.addEventListener('click', supressTask);
+
+    }
 }
 
-// Adds task to the list with the enter key press
+// Secondary event function 
+
 function addTaskToTheListFromKeyPress(event) {
     if (event.keyCode === 13) { 
         event.preventDefault();
