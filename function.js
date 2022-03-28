@@ -26,35 +26,47 @@ function addTaskToTheList () { // Adds task to the list
 
     // Create a list item that will contain a span and a checkbox
     let taskEntry = document.createElement('li')
+    let inlineTask = document.createElement('div')
     let taskText = document.createElement('span');
+    let statusTag = document.createElement('p')
     let taskCheckbox = document.createElement('input');
+    let deleteButton = document.createElement('i')
 
     // specify the input as a checkbox
     taskCheckbox.setAttribute("type", "checkbox"); 
 
 
-    // set the inner HTML of the new task
+    // set the inner HTML and attributes
     let newEntry = taskArray[taskArray.length-1]
     taskText.innerHTML = newEntry;
+    statusTag.innerHTML = "TO DO"
 
     // adds class to the new li and new checkbox
     taskEntry.classList.add("newTaskEntry");
+    inlineTask.classList.add("inlineTaskEntry");
     taskCheckbox.classList.add("checkbox");
+    taskText.classList.add("taskText");
+    deleteButton.setAttribute("class","fa-solid fa-trash-can")
+    deleteButton.setAttribute("id","deleteButton")
+    statusTag.setAttribute("id","toDoTag")
+
 
     // append the new task in the ul
     taskListDiv.append(taskEntry);
-    taskEntry.append(taskText);
-    taskEntry.append(taskCheckbox);
+    taskEntry.append(inlineTask);
+    inlineTask.append(taskText);
+    inlineTask.append(statusTag);
+    inlineTask.append(taskCheckbox);
+    inlineTask.append(deleteButton);
 
     // clear input
     
     inputField.value = '';
 
     // when checkbox clicked cross out task
-    const checkbox = document.querySelector("#tasksList > li > input");
-    checkbox.addEventListener('change', crossDoneTask);
-
-    } 
+    taskCheckbox.addEventListener('change', crossDoneTask);
+    }
+    deleteButton.addEventListener('click', supressTask);
 }
 
 // Adds task to the list with the enter key press
@@ -67,13 +79,19 @@ function addTaskToTheListFromKeyPress(event) {
 
 function crossDoneTask(event) {
     if(this.checked) {
-    this.previousElementSibling.classList.add('crossedTask');
+    this.parentElement.firstElementChild.classList.add('crossedTask');
     let doneTag = document.createElement('p')
-    this.replaceWith(doneTag);
+    this.previousElementSibling.replaceWith(doneTag);
     doneTag.setAttribute("id","doneTag");
     doneTag.innerHTML = "DONE"
    } else {
-    this.previousElementSibling.classList.remove('crossedTask'); 
-    document.getElementById("doneTag").remove(doneTag);
+    this.parentElement.firstElementChild.classList.remove('crossedTask');
+    this.previousElementSibling.removeAttribute("id");
+    this.previousElementSibling.setAttribute("id", "toDoTag");
+    this.previousElementSibling.innerHTML = "TO DO"
    }  
+}
+
+function supressTask(event) {
+    this.parentElement.remove();
 }
